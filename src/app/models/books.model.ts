@@ -20,7 +20,7 @@ const booksSchema = new Schema<Books>(
     },
     isbn: { type: String, required: true, unique: true },
     description: { type: String },
-    copies: { type: Number, required: true },
+    copies: { type: Number, required: true, min: 0 },
     available: { type: Boolean, default: true },
   },
   {
