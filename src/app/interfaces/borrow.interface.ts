@@ -1,7 +1,11 @@
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
 
-export interface Borrow {
+export interface IBorrow {
   book: Types.ObjectId;
   quantity: number;
   dueDate: Date;
+}
+
+export interface UserStaticMethod extends Model<IBorrow> {
+  updatedBook(bookId: Types.ObjectId, updatedData: Object): void;
 }

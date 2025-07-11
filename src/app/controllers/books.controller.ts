@@ -15,7 +15,7 @@ booksRoutes.post("/", async (req: Request, res: Response) => {
   });
 });
 
-// Getb All Books
+// Get All Books
 booksRoutes.get("/", async (req: Request, res: Response) => {
   let books: object = {};
   if (req.query.filter) {
