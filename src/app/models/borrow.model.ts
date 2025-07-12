@@ -11,6 +11,7 @@ const borrowSchema = new Schema<IBorrow, UserStaticMethod>(
   { versionKey: false, timestamps: true }
 );
 
+// static method
 borrowSchema.static(
   "updatedBook",
   async function (bookId: Types.ObjectId, updatedData: Object) {

@@ -29,4 +29,8 @@ const booksSchema = new Schema<IBooks>(
   }
 );
 
+// hooks
+// booksSchema.pre("findById", async function () {});
+// booksSchema.post("findById", async function () {});
+
 export const Book = mongoose.model<IBooks>("Book", booksSchema);

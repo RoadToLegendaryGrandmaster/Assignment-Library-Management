@@ -6,6 +6,7 @@ export interface IBorrow {
   dueDate: Date;
 }
 
+// Static Method
 export interface UserStaticMethod extends Model<IBorrow> {
   updatedBook(bookId: Types.ObjectId, updatedData: Object): void;
 }

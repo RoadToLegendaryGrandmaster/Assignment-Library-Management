@@ -1,4 +1,3 @@
-import { IBooks } from "../interfaces/books.interface";
 import { Borrow } from "../models/borrow.model";
 import { Book } from "./../models/books.model";
 import express, { Request, Response } from "express";
