@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 // Internal imports
 import { IBooks } from "../interfaces/books.interface";
+import { Borrow } from "./borrow.model";
 
 // Schema define
 const booksSchema = new Schema<IBooks>(
@@ -34,8 +35,20 @@ const booksSchema = new Schema<IBooks>(
 );
 
 // hooks
-// booksSchema.pre("findById", async function () {});
-// booksSchema.post("findById", async function () {});
+// middlewere
+
+booksSchema.pre("findOneAndDelete", async function (doc) {
+  console.log("findOneAndDelete,... is executed...be carefull");
+});
+
+// post
+// When delete a book then all borrowed book will delete
+booksSchema.post("findOneAndDelete", async function (doc, next) {
+  if (doc) {
+    await Borrow.deleteMany({ user: doc._id });
+  }
+  next();
+});
 
 // Exports
 export const Book = mongoose.model<IBooks>("Book", booksSchema);

@@ -30,16 +30,17 @@ const BookData = zod.object({
 // API
 // Create a book
 booksRoutes.post("/", async (req: Request, res: Response) => {
-  const body = BookData.parse(req.body);
-  let book: Object = {};
   try {
-    book = await Book.create(body);
+    const body = BookData.parse(req.body);
+    const book = await Book.create(body);
+    // success response
     res.status(200).json({
       success: true,
       message: "Book created successfully",
       data: book,
     });
   } catch (error: any) {
+    // Error response
     res.status(400).json({
       message: error.errorResponse.errmsg,
       success: false,
@@ -85,16 +86,20 @@ booksRoutes.get("/", async (req: Request, res: Response) => {
 booksRoutes.get("/:bookId", async (req: Request, res: Response) => {
   try {
     const book = await Book.findById(req.params.bookId);
+
+    if (book === null) throw Error("Book not found");
+    // Success response
     res.status(200).json({
       success: true,
       message: "Book retrieved successfully",
       data: book,
     });
   } catch (error: any) {
+    // Error response
     res.status(400).json({
       success: false,
       message: error.message,
-      error: error,
+      error: `${req.params.bookId} not found`,
     });
   }
 });
@@ -105,22 +110,41 @@ booksRoutes.patch("/:bookId", async (req: Request, res: Response) => {
     const book = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
       new: true,
     });
+
+    if (book === null) throw Error("Book id not found");
+    // Success response
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      data: book,
+    });
   } catch (error: any) {
+    // Error response
     res.status(400).json({
       success: false,
       message: error.message,
-      error: error,
+      error: `${req.params.bookId} not found`,
     });
   }
 });
 
 // delete a book
 booksRoutes.delete("/:bookId", async (req: Request, res: Response) => {
-  const book = await Book.findByIdAndDelete(req.params.bookId);
-
-  res.status(200).json({
-    success: true,
-    message: "Book deleted successfully",
-    data: book,
-  });
+  try {
+    const book = await Book.findOneAndDelete({ _id: req.params.bookId });
+    if (book === null) throw Error("Book not found");
+    // Success response
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully",
+      data: null,
+    });
+  } catch (error: any) {
+    // Error response
+    res.status(400).json({
+      success: false,
+      message: error.message,
+      error: `${req.params.bookId} not found`,
+    });
+  }
 });
