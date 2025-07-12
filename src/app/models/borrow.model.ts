@@ -1,7 +1,11 @@
+// External imports
 import mongoose, { Model, Schema, Types } from "mongoose";
+
+// Internal imports
 import { IBorrow, UserStaticMethod } from "../interfaces/borrow.interface";
 import { Book } from "./books.model";
 
+// Defined Schemas
 const borrowSchema = new Schema<IBorrow, UserStaticMethod>(
   {
     book: { type: Schema.Types.ObjectId, required: true },
@@ -11,14 +15,16 @@ const borrowSchema = new Schema<IBorrow, UserStaticMethod>(
   { versionKey: false, timestamps: true }
 );
 
-// static method
+// Declaring static method
 borrowSchema.static(
   "updatedBook",
   async function (bookId: Types.ObjectId, updatedData: Object) {
+    // taking mongobd _id, and taking updated object that need to rewrite
     await Book.findByIdAndUpdate(bookId, updatedData, { new: true });
   }
 );
 
+// Exports
 export const Borrow = mongoose.model<IBorrow, UserStaticMethod>(
   "Borrow",
   borrowSchema

@@ -1,7 +1,11 @@
+// External imports
 import mongoose, { model } from "mongoose";
-import { IBooks } from "../interfaces/books.interface";
 const { Schema } = mongoose;
 
+// Internal imports
+import { IBooks } from "../interfaces/books.interface";
+
+// Schema define
 const booksSchema = new Schema<IBooks>(
   {
     title: { type: String, required: true },
@@ -33,4 +37,5 @@ const booksSchema = new Schema<IBooks>(
 // booksSchema.pre("findById", async function () {});
 // booksSchema.post("findById", async function () {});
 
+// Exports
 export const Book = mongoose.model<IBooks>("Book", booksSchema);
