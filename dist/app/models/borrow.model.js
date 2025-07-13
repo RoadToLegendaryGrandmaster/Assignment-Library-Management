@@ -43,17 +43,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Borrow = void 0;
+// External imports
 const mongoose_1 = __importStar(require("mongoose"));
 const books_model_1 = require("./books.model");
+// Defined Schemas
 const borrowSchema = new mongoose_1.Schema({
     book: { type: mongoose_1.Schema.Types.ObjectId, required: true },
     quantity: { type: Number, required: true, min: 1 },
     dueDate: { type: mongoose_1.Schema.Types.Date },
 }, { versionKey: false, timestamps: true });
-// static method
+// Declaring static method
 borrowSchema.static("updatedBook", function (bookId, updatedData) {
     return __awaiter(this, void 0, void 0, function* () {
+        // taking mongobd _id, and taking updated object that need to rewrite
         yield books_model_1.Book.findByIdAndUpdate(bookId, updatedData, { new: true });
     });
 });
+// Exports
 exports.Borrow = mongoose_1.default.model("Borrow", borrowSchema);
