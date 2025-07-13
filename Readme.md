@@ -2,6 +2,25 @@
 
 A digital version of your library.
 
+## project folder structure
+
+```text
+|--dist
+|--src
+|--  - |app
+|--     ---controllers
+|--        |--- books.controller.ts
+|--        |--- borrow.controller.ts
+|--     ---|interfaces
+|--        |--- books.interface.ts
+|--        |--- borrow.interface.ts
+|--     ---|models
+|--        |--- books.model.ts
+|--        |--- borrow.model.ts
+|--  - |app.ts
+|--  - |server.ts
+```
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -315,3 +334,10 @@ Response: `200`
   "error": "Book has 0 copies, you requested 1"
 }
 ```
+
+#### This a local server setup. To deploy this project in vercel:
+
+- You should have typescript installed
+- install ts-node-dev: `npm i ts-node-dev`
+- build project: `npm run build`
+- upload the `dist` folder in vercel
